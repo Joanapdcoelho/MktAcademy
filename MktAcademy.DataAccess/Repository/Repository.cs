@@ -14,33 +14,28 @@ namespace MktAcademy.DataAccess.Repository
     {
         private readonly ApplicationDbContext _db;
         internal DbSet<T> dbSet;
-
         public Repository(ApplicationDbContext db)
         {
             _db = db;
-            //_db.Courses.Include(u => u.Category);
-            //_db.ShoppingCarts.Include(u => u.Course);
             this.dbSet = _db.Set<T>();
+            //_db.Categories == dbSet           
         }
+
         public void Add(T entity)
         {
             dbSet.Add(entity);
         }
-        //includeProp - "Category,outras propriedades a incluir"
+
+        public T Get(Expression<Func<T, bool>> filter)
+        {
+            IQueryable<T> query = dbSet;
+            query = query.Where(filter);
+            return query.FirstOrDefault();
+        }
+
         public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
-            if (filter != null)
-            {
-                query = query.Where(filter);
-            }
-            if (includeProperties != null)
-            {
-                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))//remove entradas em branco
-                {
-                    query = query.Include(includeProp);
-                }
-            }
             return query.ToList();
         }
 
@@ -74,7 +69,6 @@ namespace MktAcademy.DataAccess.Repository
                 }
                 return query.FirstOrDefault();
             }
-
         }
 
         public void Remove(T entity)
