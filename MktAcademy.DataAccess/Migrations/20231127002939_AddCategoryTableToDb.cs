@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace MktAcademy.Migrations
+namespace MktAcademy.DataAccess.Migrations
 {
     /// <inheritdoc />
     public partial class AddCategoryTableToDb : Migration

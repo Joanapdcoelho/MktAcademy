@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MktAcademy.Models;
+using MktAcademy.DataAccess.Data;
 
-namespace MktAcademy.Data
+
+namespace MktAcademy.DataAccess.Data
 {
     public class ApplicationDbContext : DbContext
     {

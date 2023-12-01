@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MktAcademy.Data;
+using MktAcademy.DataAccess.Data;
 using MktAcademy.Models;
 
 namespace MktAcademy.Controllers

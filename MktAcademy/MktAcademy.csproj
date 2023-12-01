@@ -18,7 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\images\" />
+    <ProjectReference Include="..\MktAcademy.DataAccess\MktAcademy.DataAccess.csproj" />
+    <ProjectReference Include="..\MktAcademy.Models\MktAcademy.Models.csproj" />
   </ItemGroup>
 
 </Project>
