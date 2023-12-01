@@ -1,4 +1,4 @@
-
+/*
 
 .fw-medium {
     font-weight: 600 !important;
@@ -17,7 +17,7 @@
 }
 
 
-/*** Spinner ***/
+** Spinner **
 #spinner {
     opacity: 0;
     visibility: hidden;
@@ -32,7 +32,7 @@
     }
 
 
-/*** Button ***/
+** Button **
 .btn {
     font-family: 'Nunito', sans-serif;
     font-weight: 600;
@@ -71,7 +71,7 @@
 }
 
 
-/*** Navbar ***/
+** Navbar **
 .navbar .dropdown-toggle::after {
     border: none;
     content: "\f107";
@@ -146,7 +146,7 @@
 }
 
 
-/*** Header carousel ***/
+** Header carousel **
 @media (max-width: 768px) {
     .header-carousel .owl-carousel-item {
         position: relative;
@@ -207,7 +207,7 @@
 }
 
 
-/*** Section Title ***/
+** Section Title **
 .section-title {
     position: relative;
     display: inline-block;
@@ -247,7 +247,7 @@
     }
 
 
-/*** Service ***/
+** Service **
 .service-item {
     background: var(--light);
     transition: .5s;
@@ -267,7 +267,7 @@
     }
 
 
-/*** Categories & Courses ***/
+** Categories & Courses **
 .category img,
 .course-item img {
     transition: .5s;
@@ -279,7 +279,7 @@
 }
 
 
-/*** Team ***/
+** Team **
 .team-item img {
     transition: .5s;
 }
@@ -289,7 +289,7 @@
 }
 
 
-/*** Testimonial ***/
+** Testimonial **
 .testimonial-carousel::before {
     position: absolute;
     content: "";
@@ -361,3 +361,4 @@
         border-color: var(--primary);
     }
 
+*/
