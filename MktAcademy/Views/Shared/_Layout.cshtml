@@ -1,5 +1,4 @@
-﻿@using Microsoft.AspNetCore.Http
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -18,9 +17,10 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
     <link rel="stylesheet" href="//cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="~/lib/animate/animate.min.css"/>
-    <link rel="stylesheet" href="~/lib/owlcarousel/owl.carousel.min.css />   
+    @* <link rel="stylesheet" href="~/lib/owlcarousel/owl.carousel.min.js" /> *@
 
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
         <a class="navbar-brand d-flex align-items-center px-4 px-lg-5" asp-area="" asp-controller="Home" asp-action="Index">
@@ -31,20 +31,20 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a class="nav-item nav-link active" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                <a class="nav-item nav-link" asp-area="" asp-controller="About" asp-action="Index">About</a>
-                <a class="nav-item nav-link" asp-area="" asp-controller="Course" asp-action="">Courses</a>
+                <a class="nav-item nav-link active text-uppercase" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                <a class="nav-item nav-link text-uppercase" asp-area="" asp-controller="About" asp-action="Index">About</a>
+                <a class="nav-item nav-link text-uppercase" asp-area="" asp-controller="Course" asp-action="">Courses</a>
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Backoffice</a>
+                    <a href="#" class="nav-link dropdown-toggle text-uppercase" data-bs-toggle="dropdown">Backoffice</a>
                     <div class="dropdown-menu fade-down m-0">
-                        <a class="dropdown-item" asp-area="" asp-controller="Category" asp-action="Index"><i class="fa-solid fa-list"></i> Category</a>
-                        <a class="dropdown-item" asp-area="" asp-controller="Course" asp-action="Index"><i class="fa-solid fa-book"></i> Courses</a>
-                        <a class="dropdown-item" asp-area="" asp-controller="Company" asp-action="Index"><i class="fa-solid fa-building"></i> Company</a>
-                        <a class="dropdown-item" asp-area="" asp-page="/Account/Register"><i class="fa-solid fa-circle-user"></i> Create User</a>
-                        <a class="dropdown-item" asp-area="" asp-controller="User" asp-action="Index"><i class="fa-solid fa-user-gear"></i> Manage User</a>
+                        <a class="dropdown-item text-uppercase" asp-area="" asp-controller="Category" asp-action="Index"><i class="fa-solid fa-list"></i> Category</a>
+                        <a class="dropdown-item text-uppercase" asp-area="" asp-controller="Course" asp-action="Index"><i class="fa-solid fa-book"></i> Courses</a>
+                        <a class="dropdown-item text-uppercase" asp-area="" asp-controller="Company" asp-action="Index"><i class="fa-solid fa-building"></i> Company</a>
+                        <a class="dropdown-item text-uppercase" asp-area="" asp-page="/Account/Register"><i class="fa-solid fa-circle-user"></i> Create User</a>
+                        <a class="dropdown-item text-uppercase" asp-area="" asp-controller="User" asp-action="Index"><i class="fa-solid fa-user-gear"></i> Manage User</a>
                     </div>
                 </div>
-                <a class="nav-item nav-link" asp-area="Customer" asp-controller="" asp-action="">Contact</a>
+                <a class="nav-item nav-link text-uppercase" asp-area="Customer" asp-controller="" asp-action="">Contact</a>
             </div>
         </div>
     </nav>
