@@ -61,6 +61,84 @@ namespace MktAcademy.DataAccess.Migrations
                             Name = "Legislation"
                         });
                 });
+
+            modelBuilder.Entity("MktAcademy.Models.Course", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<decimal>("ListPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price20")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Courses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Marketing course 25h",
+                            ListPrice = 540m,
+                            Name = "Marketing",
+                            Price20 = 432m,
+                            Remarks = ""
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Marketing course 25h",
+                            ListPrice = 540m,
+                            Name = "Digital Marketing",
+                            Price20 = 432m,
+                            Remarks = ""
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Marketing course 25h",
+                            ListPrice = 540m,
+                            Name = "E-mail Marketing",
+                            Price20 = 432m,
+                            Remarks = ""
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Marketing course 25h",
+                            ListPrice = 540m,
+                            Name = "Social Media Marketing",
+                            Price20 = 432m,
+                            Remarks = ""
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Marketing course 25h",
+                            ListPrice = 540m,
+                            Name = "Legislation 2.0",
+                            Price20 = 432m,
+                            Remarks = ""
+                        });
+                });
 #pragma warning restore 612, 618
         }
     }
