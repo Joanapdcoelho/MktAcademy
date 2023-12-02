@@ -9,6 +9,7 @@ namespace MktAcademy.DataAccess.Repository.IRepository
     public interface IUnitOfWork
     {
         ICategoryRepository Category { get; }
+        ICourseRepository Course { get; }
 
         void Save();
     }
