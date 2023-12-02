@@ -39,7 +39,7 @@ namespace MktAcademy.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
 
                     b.HasData(
                         new
@@ -70,10 +70,16 @@ namespace MktAcademy.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("ListPrice")
                         .HasColumnType("decimal(18,2)");
@@ -90,13 +96,17 @@ namespace MktAcademy.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Courses");
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Courses", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = 1,
+                            CategoryId = 1,
                             Description = "Marketing course 25h",
+                            ImageUrl = "",
                             ListPrice = 540m,
                             Name = "Marketing",
                             Price20 = 432m,
@@ -105,7 +115,9 @@ namespace MktAcademy.DataAccess.Migrations
                         new
                         {
                             Id = 2,
+                            CategoryId = 2,
                             Description = "Marketing course 25h",
+                            ImageUrl = "",
                             ListPrice = 540m,
                             Name = "Digital Marketing",
                             Price20 = 432m,
@@ -114,7 +126,9 @@ namespace MktAcademy.DataAccess.Migrations
                         new
                         {
                             Id = 3,
+                            CategoryId = 3,
                             Description = "Marketing course 25h",
+                            ImageUrl = "",
                             ListPrice = 540m,
                             Name = "E-mail Marketing",
                             Price20 = 432m,
@@ -123,7 +137,9 @@ namespace MktAcademy.DataAccess.Migrations
                         new
                         {
                             Id = 4,
+                            CategoryId = 1,
                             Description = "Marketing course 25h",
+                            ImageUrl = "",
                             ListPrice = 540m,
                             Name = "Social Media Marketing",
                             Price20 = 432m,
@@ -132,12 +148,25 @@ namespace MktAcademy.DataAccess.Migrations
                         new
                         {
                             Id = 5,
+                            CategoryId = 2,
                             Description = "Marketing course 25h",
+                            ImageUrl = "",
                             ListPrice = 540m,
                             Name = "Legislation 2.0",
                             Price20 = 432m,
                             Remarks = ""
                         });
+                });
+
+            modelBuilder.Entity("MktAcademy.Models.Course", b =>
+                {
+                    b.HasOne("MktAcademy.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 #pragma warning restore 612, 618
         }
