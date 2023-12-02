@@ -18,46 +18,72 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
     <link rel="stylesheet" href="//cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="~/lib/animate/animate.min.css"/>
-    @* <link rel="stylesheet" href="~/lib/owlcarousel/owl.carousel.min.js" /> *@
+    <link rel="stylesheet" href="~/lib/owlcarousel/owl.carousel.min.js" />
 
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-        <a class="navbar-brand d-flex align-items-center px-4 px-lg-5" asp-area="" asp-controller="Home" asp-action="Index">
-            <h1 class="m-0 text-primary"><i class="fa-solid fa-graduation-cap"></i> MktAcademy</h1>
-        </a>
-        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a class="nav-item nav-link active text-uppercase" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                <a class="nav-item nav-link text-uppercase" asp-area="" asp-controller="About" asp-action="Index">About</a>
-                <a class="nav-item nav-link text-uppercase" asp-area="" asp-controller="Course" asp-action="">Courses</a>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle text-uppercase" data-bs-toggle="dropdown">Backoffice</a>
-                    <div class="dropdown-menu fade-down m-0">
-                        <a class="dropdown-item text-uppercase" asp-area="" asp-controller="Category" asp-action="Index"><i class="fa-solid fa-list"></i> Category</a>
-                        <a class="dropdown-item text-uppercase" asp-area="" asp-controller="Course" asp-action="Index"><i class="fa-solid fa-book"></i> Courses</a>
-                        <a class="dropdown-item text-uppercase" asp-area="" asp-controller="Company" asp-action="Index"><i class="fa-solid fa-building"></i> Company</a>
-                        <a class="dropdown-item text-uppercase" asp-area="" asp-page="/Account/Register"><i class="fa-solid fa-circle-user"></i> Create User</a>
-                        <a class="dropdown-item text-uppercase" asp-area="" asp-controller="User" asp-action="Index"><i class="fa-solid fa-user-gear"></i> Manage User</a>
-                    </div>
-                </div>
-                <a class="nav-item nav-link text-uppercase" asp-area="Customer" asp-controller="" asp-action="">Contact</a>
-            </div>
-        </div>
-    </nav>
-    <!-- Navbar End -->
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom box-shadow mb-3 fixed-top p-0">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <h1 class="m-0 text-primary"><i class="fa-solid fa-graduation-cap"></i> MktAcademy</h1>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between text-uppercase">
+                    <ul class="navbar-nav ms-auto p-4 p-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
 
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Admin" asp-controller="Order" asp-action="Index">Manage Order</a>
+                        </li>
+                        
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Content Managment
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item">
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index"><i class="fa-solid fa-list"></i> Category</a>
+                                    </li>
+                                    <li class="nav-item">
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Course" asp-action="Index"><i class="fa-solid fa-book"></i> Courses</a>
+                                    </li>
+                                    <li class="nav-item">
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Company" asp-action="Index"><i class="fa-solid fa-building"></i> Company</a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li class="nav-item">
+                                    <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register"><i class="fa-solid fa-circle-user"></i> Create User</a>
+                                    </li>
+                                    <li class="nav-item">
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Index"><i class="fa-solid fa-user-gear"></i> Manage User</a>
+                                    </li>
+                                </ul>
+                            </li>  
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Customer" asp-controller="Cart" asp-action="Index">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>   
+    
     <div class="container-fluid">
         <main role="main" class="pb-3">
             <partial name="_Notification" />
             @RenderBody()
         </main>
     </div>
-    <!-- Footer Start -->
+    
     <div class="container">
         <footer class="py-3 my-4 border-top">            
             <p class="text-center text-body-secondary">&copy; 2023 <a href="#">MktAcademy</a> Made with <i class="bi bi-heart-fill"></i> by Joana Coelho - All Rights Reserved</p>
@@ -67,11 +93,8 @@
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/main.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>   
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="//cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js" asp-append-version="true"></script>
 
@@ -80,11 +103,13 @@
     <script src="~/lib/wow/wow.min.js"></script>
     <script src="~/lib/easing/easing.min.js"></script>
     <script src="~/lib/waypoints/waypoints.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    @* <script>
-        new WOW().init();
-    </script> *@
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>  
+    <script src="~/js/main.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 
-    @await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("Scripts", required: false)    
+    @* <script>
+    new WOW().init();
+    </script> *@
 </body>
 </html>
