@@ -24,7 +24,7 @@ namespace MktAcademy.Models
 
         //Preço normal de lista
         [DataType(DataType.Currency)]//tipo moeda
-        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]//formatar 2 casas decimais, mas guarda com o formato que está na tabela
+        //[DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]//formatar 2 casas decimais, mas guarda com o formato que está na tabela
         [Required(ErrorMessage = "You must insert a {0}")]
         [Display(Name = "List Price")]
         [Range(0, 1200)]
@@ -39,7 +39,18 @@ namespace MktAcademy.Models
         public decimal Price20 { get; set; }
 
         [DataType(DataType.MultilineText)]
-        public string? Remarks { get; set; }        
+        public string? Remarks { get; set; }
+
+        public int CategoryId { get; set; }
+        [ForeignKey("CategoryId")]
+        //[ValidateNever]
+        public Category Category { get; set; }
+
+        [Display(Name = "Insert Image")]
+        //[ValidateNever]
+        public string? ImageUrl { get; set; }
+
+
 
     }
 }
