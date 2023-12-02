@@ -22,8 +22,4 @@
     <ProjectReference Include="..\MktAcademy.Models\MktAcademy.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>
