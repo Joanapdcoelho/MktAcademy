@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MktAcademy.DataAccess.Data;
 using MktAcademy.DataAccess.Repository.IRepository;
 using MktAcademy.Models;
+using System.Collections.Generic;
 
 namespace MktAcademy.Areas.Admin.Controllers
 {
@@ -15,13 +17,22 @@ namespace MktAcademy.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            List<Course> objCourseList = _unitOfWork.Course.GetAll().ToList();
+            List<Course> objCourseList = _unitOfWork.Course.GetAll().ToList();           
             return View(objCourseList);
         }
 
         //GET Create
         public IActionResult Create()
         {
+            //Projections in EF Core
+            IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+            {
+                Text = u.Name,
+                Value = u.Id.ToString()
+            }
+            );
+
+            ViewBag.CategoryList = CategoryList;
             return View();
         }
 
@@ -33,7 +44,7 @@ namespace MktAcademy.Areas.Admin.Controllers
             {
                 _unitOfWork.Course.Add(obj);
                 _unitOfWork.Save();
-                TempData["success"] = "Category created successfully";
+                TempData["success"] = "Course created successfully";
                 return RedirectToAction("Index");
             }
 
@@ -81,14 +92,14 @@ namespace MktAcademy.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            Course categoryFromDb = _unitOfWork.Course.Get(u => u.Id == id);
+            Course courseFromDb = _unitOfWork.Course.Get(u => u.Id == id);
 
-            if (categoryFromDb == null)
+            if (courseFromDb == null)
             {
                 return NotFound();
             }
 
-            return View(categoryFromDb);
+            return View(courseFromDb);
         }
 
         //POST Delete
