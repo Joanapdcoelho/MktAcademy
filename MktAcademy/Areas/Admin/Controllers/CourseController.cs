@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using MktAcademy.DataAccess.Data;
 using MktAcademy.DataAccess.Repository.IRepository;
 using MktAcademy.Models;
+using MktAcademy.Models.ViewModels;
 using System.Collections.Generic;
 
 namespace MktAcademy.Areas.Admin.Controllers
@@ -24,31 +25,39 @@ namespace MktAcademy.Areas.Admin.Controllers
         //GET Create
         public IActionResult Create()
         {
-            //Projections in EF Core
-            IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+            CourseVM courseVM = new()
             {
-                Text = u.Name,
-                Value = u.Id.ToString()
-            }
-            );
-
-            ViewBag.CategoryList = CategoryList;
-            return View();
-        }
+                CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                }
+            ),
+                Course = new Course()
+            };
+            return View(courseVM);
+        }     
 
         //POST Create
         [HttpPost]
-        public IActionResult Create(Course obj)
+        public IActionResult Create(CourseVM courseVM)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Course.Add(obj);
+                _unitOfWork.Course.Add(courseVM.Course);
                 _unitOfWork.Save();
                 TempData["success"] = "Course created successfully";
                 return RedirectToAction("Index");
             }
-
-            return View();
+            else
+            {
+                courseVM.CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                });
+                return View(courseVM);
+            }        
 
         }
 
