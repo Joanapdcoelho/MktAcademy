@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace MktAcademy.Models
 {
@@ -18,13 +19,13 @@ namespace MktAcademy.Models
         public string Name { get; set; }
 
 
-        [StringLength(200, ErrorMessage = "The {0} should be between {2} and {1} characters", MinimumLength = 5)]
+        [StringLength(1200, ErrorMessage = "The {0} should be between {2} and {1} characters", MinimumLength = 5)]
         [Required(ErrorMessage = "You must insert a {0}")]
         public string Description { get; set; }
 
         //Preço normal de lista
         [DataType(DataType.Currency)]//tipo moeda
-        //[DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]//formatar 2 casas decimais, mas guarda com o formato que está na tabela
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]//formatar 2 casas decimais, mas guarda com o formato que está na tabela
         [Required(ErrorMessage = "You must insert a {0}")]
         [Display(Name = "List Price")]
         [Range(0, 1200)]
@@ -43,11 +44,11 @@ namespace MktAcademy.Models
 
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
-        //[ValidateNever]
+        [ValidateNever]
         public Category Category { get; set; }
 
         [Display(Name = "Insert Image")]
-        //[ValidateNever]
+        [ValidateNever]
         public string? ImageUrl { get; set; }
 
 
