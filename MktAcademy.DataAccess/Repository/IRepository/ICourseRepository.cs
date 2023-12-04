@@ -11,6 +11,6 @@ namespace MktAcademy.DataAccess.Repository.IRepository
 	{
 		IEnumerable<Course> Get(Func<object, bool> value, string includeProperties);
 		void Update(Course obj);
-		
+
 	}
 }
