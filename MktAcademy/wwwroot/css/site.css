@@ -102,3 +102,34 @@ Services Style
         color: #4a4a4a;
         margin-bottom: 25px;
     }
+
+
+.price-container {
+    position: relative;
+    display: inline-block;
+}
+
+.original-price {
+    font-size: 50px; /* tamanho desejado */
+}
+
+.animation-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+.animation-line {
+    display: inline-block;
+    width: 0;
+    height: 100%;
+    background-color: red;
+    animation: revealLine 1s ease-in-out;
+}
+
+@keyframes revealLine {
+    to {
+        width: 100%;
+    }
+}
