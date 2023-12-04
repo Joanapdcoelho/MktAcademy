@@ -35,8 +35,13 @@ namespace MktAcademy.DataAccess.Repository
 				objFromDb.Description = obj.Description;
 				objFromDb.ListPrice = obj.ListPrice;
 				objFromDb.Price20 = obj.Price20;
+				objFromDb.CategoryId = obj.CategoryId;
 				objFromDb.Remarks = obj.Remarks;
-				
+
+				if (obj.ImageUrl != null)
+				{
+					objFromDb.ImageUrl = obj.ImageUrl;
+				}
 			}
 		}
 	}
