@@ -1,7 +1,16 @@
+using System.Diagnostics;
+using System.Security.Claims;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using MktAcademy.DataAccess.Repository.IRepository;
 using MktAcademy.Models;
-using System.Diagnostics;
+using MktAcademy.Models.ViewModels;
+using MktAcademy.Utility;
 
 namespace MktAcademy.Areas.Customer.Controllers
 {
@@ -21,6 +30,12 @@ namespace MktAcademy.Areas.Customer.Controllers
         {
             IEnumerable<Course> courseList = _unitOfWork.Course.GetAll(includeProperties: "Category");
             return View(courseList);
+        }
+
+        public IActionResult Details(int id)
+        {
+            Course course = _unitOfWork.Course.Get(u => u.Id == id, includeProperties: "Category");
+            return View(course);
         }
 
         public IActionResult Privacy()
