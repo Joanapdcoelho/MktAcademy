@@ -42,7 +42,7 @@ namespace MktAcademy.Models
         [DataType(DataType.MultilineText)]
         public string? Remarks { get; set; }
 
-        public int? CategoryId { get; set; }
+        public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         [ValidateNever]
         public Category Category { get; set; }
