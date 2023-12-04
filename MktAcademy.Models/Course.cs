@@ -19,7 +19,7 @@ namespace MktAcademy.Models
         public string Name { get; set; }
 
 
-        [StringLength(1200, ErrorMessage = "The {0} should be between {2} and {1} characters", MinimumLength = 5)]
+        [StringLength(2000, ErrorMessage = "The {0} should be between {2} and {1} characters", MinimumLength = 5)]
         [Required(ErrorMessage = "You must insert a {0}")]
         public string Description { get; set; }        
 
@@ -42,7 +42,7 @@ namespace MktAcademy.Models
         [DataType(DataType.MultilineText)]
         public string? Remarks { get; set; }
 
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         [ValidateNever]
         public Category Category { get; set; }

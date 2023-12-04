@@ -1,11 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MktAcademy.Models;
 using MktAcademy.DataAccess.Data;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace MktAcademy.DataAccess.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -17,6 +19,8 @@ namespace MktAcademy.DataAccess.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "Marketing", DisplayOrder = 1 },
                 new Category { Id = 2, Name = "Digital Marketing", DisplayOrder = 2 },

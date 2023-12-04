@@ -1,11 +1,11 @@
 ﻿
 @model Course
 <!-- Header Start -->
-<div class="container-fluid bg-primary py-5 mb-5 page-header">
-    <div class="container py-5">
+<div class="container-fluid bg-primary py-5 mb-5 page-header">    
+    <div class="container py-5">        
         <div class="row justify-content-center">
             <div class="col-lg-10 text-center">
-                <h1 class="display-3 text-white animated slideInDown">Courses</h1>                
+                <h1 class="display-3 text-white animated slideInDown">Course Details</h1>                
             </div>
         </div>
     </div>
@@ -13,7 +13,7 @@
 <!-- Header End -->
 <form method="post">
     <div class="card shadow border-0 my-4">
-        <div class="card-header bg-secondary bg-gradient text-light py-4">
+        <div class="card-header bg-primary bg-gradient text-light py-4">
             <div class="row">
                 <div class="col-12 text-center">
                     <h3 class="text-white text-uppercase">@Model.Name</h3>
@@ -33,7 +33,7 @@
                 <div class="row">
                     <div class="col-12 col-lg-3 offset-lg-1 text-center mb-3">
                         <img src="@Model.ImageUrl" width="100%" class="rounded" />
-                    </div>
+                    </div>                    
                     <div class="col-12 col-lg-6 offset-lg-1">
 
                         <div class="col-12 col-md-6 pb-4">
@@ -58,7 +58,7 @@
 
                         </div>
                         <div class="row text-center ps-2">
-                            <div class="p-1 col-3 col-lg-2 bg-white text-warning fw-bold">
+                            <div class="p-1 col-3 col-lg-2 bg-white fw-bold">
                                 <div>Price @Model.ListPrice.ToString("c")</div>
                             </div>
                             <div class="p-1 col-3 col-lg-2 bg-white text-warning fw-bold">
