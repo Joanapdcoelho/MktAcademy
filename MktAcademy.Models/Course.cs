@@ -21,7 +21,7 @@ namespace MktAcademy.Models
 
         [StringLength(1200, ErrorMessage = "The {0} should be between {2} and {1} characters", MinimumLength = 5)]
         [Required(ErrorMessage = "You must insert a {0}")]
-        public string Description { get; set; }
+        public string Description { get; set; }        
 
         //Preço normal de lista
         [DataType(DataType.Currency)]//tipo moeda
