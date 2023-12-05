@@ -16,8 +16,9 @@ namespace MktAcademy.DataAccess.Repository
         internal DbSet<T> dbSet;
         public Repository(ApplicationDbContext db)
         {
-            _db = db;
+            _db = db;            
             this.dbSet = _db.Set<T>();
+            //_db.Courses.Include(u => u.Category).Include(u => u.CategoryId);
             //_db.Categories == dbSet           
         }
 
@@ -26,16 +27,48 @@ namespace MktAcademy.DataAccess.Repository
             dbSet.Add(entity);
         }
 
-        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null)
+        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked = false)
         {
-            IQueryable<T> query = dbSet;
-            query = query.Where(filter);
-            return query.FirstOrDefault();
-        }              
+            IQueryable<T> query;
+            if (tracked)
+            {
+                query = dbSet;
 
+            }
+            else
+            {
+                query = dbSet.AsNoTracking();
+            }
+
+            query = query.Where(filter);
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach (var includeProp in includeProperties
+                    .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
+            return query.FirstOrDefault();
+
+        }
+
+        //include properties - "Category"
         public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach (var includeProp in includeProperties
+                    .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
             return query.ToList();
         }
 
