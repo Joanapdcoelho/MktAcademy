@@ -29,6 +29,7 @@ namespace MktAcademy.Models
         [Required(ErrorMessage = "You must insert a {0}")]
         [Display(Name = "List Price")]
         [Range(0, 1200)]
+        [Column(TypeName = "decimal(10, 2)")]
         public decimal ListPrice { get; set; }
 
         //Preço para empresas com desconto 20%
@@ -37,6 +38,7 @@ namespace MktAcademy.Models
         [Required(ErrorMessage = "You must insert a {0}")]
         [Display(Name = "Company Price")]
         [Range(1, 1200)]
+        [Column(TypeName = "decimal(10, 2)")]
         public decimal Price20 { get; set; }
 
         [DataType(DataType.MultilineText)]
