@@ -1,129 +1,154 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using MktAcademy.DataAccess.Data;
-using MktAcademy.DataAccess.Repository.IRepository;
 using MktAcademy.Models;
+using MktAcademy.DataAccess.Repository;
+using MktAcademy.DataAccess.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
+using MktAcademy.Utility;
 using MktAcademy.Models.ViewModels;
+using MktAcademy.Areas.Admin.Controllers;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json.Linq;
+using static System.Net.Mime.MediaTypeNames;
+using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 
 namespace MktAcademy.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    //[Authorize(Roles = SD.Role_Admin)]
     public class CourseController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        public CourseController(IUnitOfWork unitOfWork)
+        private readonly IWebHostEnvironment _hostEnvironment;
+
+        public CourseController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment)
         {
             _unitOfWork = unitOfWork;
+            _hostEnvironment = hostEnvironment;
         }
         public IActionResult Index()
         {
-            List<Course> objCourseList = _unitOfWork.Course.GetAll().ToList();           
-            return View(objCourseList);
+            return View();
         }
 
-        //GET Create
-        public IActionResult Create()
+        //GET
+        public IActionResult Upsert(int? id)
         {
             CourseVM courseVM = new()
             {
-                CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+                Course = new(),
+                CategoryList = _unitOfWork.Category.GetAll().Select(i => new SelectListItem
                 {
-                    Text = u.Name,
-                    Value = u.Id.ToString()
-                }
-            ),
-                Course = new Course()
-            };
-            return View(courseVM);
-        }     
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
 
-        //POST Create
+            };
+
+            if (id == null || id == 0)
+            {
+                //create course
+                //ViewBag.CategoryList = CategoryList;
+                //ViewData["CategoryList"] = CategoryList;
+                return View(courseVM);
+            }
+            else
+            {
+                courseVM.Course = _unitOfWork.Course.GetFirstOrDefault(u => u.Id == id);
+                return View(courseVM);
+                //update course
+            }
+        }
+
+        //POST
         [HttpPost]
-        public IActionResult Create(CourseVM courseVM)
+        [ValidateAntiForgeryToken]
+        public IActionResult Upsert(CourseVM obj, IFormFile? file)
         {
+
             if (ModelState.IsValid)
             {
-                _unitOfWork.Course.Add(courseVM.Course);
+                string wwwRootPath = _hostEnvironment.WebRootPath;
+                //se o ficheiro foi uploaded
+                if (file != null)
+                {
+                    //mudar nome
+                    string fileName = Guid.NewGuid().ToString();
+                    //localização do ficheiro uploaded
+                    var uploads = Path.Combine(wwwRootPath, @"images\courses");
+                    //renomear o ficheiro mas com a mesma extensão
+                    var extension = Path.GetExtension(file.FileName);
+
+                    //
+                    if (obj.Course.ImageUrl != null)
+                    {
+                        var oldImagePath = Path.Combine(wwwRootPath, obj.Course.ImageUrl.TrimStart('\\'));
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+
+                    //Copiar 
+                    using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                    {
+                        //copiar o ficheiro
+                        file.CopyTo(fileStreams);
+                    }
+                    obj.Course.ImageUrl = @"\images\courses\" + fileName + extension;
+                    //salvar na bd
+                }
+                if (obj.Course.Id == 0)
+                {
+                    _unitOfWork.Course.Add(obj.Course);
+
+                }
+                else
+                {
+                    _unitOfWork.Course.Update(obj.Course);
+                }
                 _unitOfWork.Save();
                 TempData["success"] = "Course created successfully";
                 return RedirectToAction("Index");
             }
-            else
-            {
-                courseVM.CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
-                {
-                    Text = u.Name,
-                    Value = u.Id.ToString()
-                });
-                return View(courseVM);
-            }        
-
-        }
-
-        //Edit
-        public IActionResult Edit(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            Course? courseFromDb = _unitOfWork.Course.Get(u => u.Id == id);
-
-            if (courseFromDb == null)
-            {
-                return NotFound();
-            }
-
-            return View(courseFromDb);
-        }
-
-
-        //POST Edit
-        [HttpPost]
-        public IActionResult Edit(Course obj)
-        {
-            if (ModelState.IsValid)
-            {
-                _unitOfWork.Course.Update(obj);
-                _unitOfWork.Save();
-                TempData["success"] = "Course updated successfully";
-                return RedirectToAction("Index");
-            }
-
             return View(obj);
         }
 
-        //Delete
+
+
+        #region API CALLS
+        //all products
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var courseList = _unitOfWork.Course.GetAll(includeProperties: "Category");
+            return Json(new { data = courseList });
+        }
+
+        //POST
+        [HttpDelete]
         public IActionResult Delete(int? id)
         {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            Course courseFromDb = _unitOfWork.Course.Get(u => u.Id == id);
-
-            if (courseFromDb == null)
-            {
-                return NotFound();
-            }
-
-            return View(courseFromDb);
-        }
-
-        //POST Delete
-        [HttpPost, ActionName("Delete")]
-        public IActionResult DeletePOST(int? id)
-        {
-            Course obj = _unitOfWork.Course.Get(u => u.Id == id);
+            var obj = _unitOfWork.Course.GetFirstOrDefault(u => u.Id == id);
             if (obj == null)
             {
-                return NotFound();
+                return Json(new { success = false, message = "Error while deleting" });
             }
+
+            var oldImagePath = Path.Combine(_hostEnvironment.WebRootPath, obj.ImageUrl.TrimStart('\\'));
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
+
             _unitOfWork.Course.Remove(obj);
             _unitOfWork.Save();
-            TempData["success"] = "Course deleted successfully";
-            return RedirectToAction("Index");
+            return Json(new { success = true, message = "Delete Successful" });
+
         }
+        #endregion
     }
 }
