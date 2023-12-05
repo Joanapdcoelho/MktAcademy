@@ -21,10 +21,16 @@ namespace MktAcademy.DataAccess.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Course>()
+            .HasOne(c => c.Category)
+            .WithMany()
+            .HasForeignKey(c => c.CategoryId)
+            .OnDelete(DeleteBehavior.Restrict); // Define o comportamento de exclusão para "Restrict"
+
             modelBuilder.Entity<Category>().HasData(
-                new Category { Id = 1, Name = "Marketing", DisplayOrder = 1 },
-                new Category { Id = 2, Name = "Digital Marketing", DisplayOrder = 2 },
-                new Category { Id = 3, Name = "Legislation", DisplayOrder = 3 }
+                new Category { Id = 1, Name = "Marketing"},
+                new Category { Id = 2, Name = "Digital Marketing"},
+                new Category { Id = 3, Name = "Legislation"}
 
                 );
 
