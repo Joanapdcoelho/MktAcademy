@@ -82,7 +82,7 @@ namespace MktAcademy.Areas.Admin.Controllers
                     //renomear o ficheiro mas com a mesma extensão
                     var extension = Path.GetExtension(file.FileName);
 
-                    //
+                    //se existir a imagem, remover
                     if (obj.Course.ImageUrl != null)
                     {
                         var oldImagePath = Path.Combine(wwwRootPath, obj.Course.ImageUrl.TrimStart('\\'));
@@ -138,6 +138,7 @@ namespace MktAcademy.Areas.Admin.Controllers
                 return Json(new { success = false, message = "Error while deleting" });
             }
 
+            //remover a imagem associada se existir
             var oldImagePath = Path.Combine(_hostEnvironment.WebRootPath, obj.ImageUrl.TrimStart('\\'));
             if (System.IO.File.Exists(oldImagePath))
             {
@@ -146,6 +147,7 @@ namespace MktAcademy.Areas.Admin.Controllers
 
             _unitOfWork.Course.Remove(obj);
             _unitOfWork.Save();
+            //mensagem de sucesso
             return Json(new { success = true, message = "Delete Successful" });
 
         }
