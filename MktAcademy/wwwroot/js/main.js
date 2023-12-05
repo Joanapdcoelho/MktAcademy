@@ -73,7 +73,7 @@
       
     
     // Header carousel
-    $(".header-carousel").owlCarousel({
+    $(".header-carousel",{
         autoplay: true,
         smartSpeed: 1500,
         items: 1,
@@ -88,7 +88,7 @@
 
 
     // Testimonials carousel
-    $(".testimonial-carousel").owlCarousel({
+    $(".testimonial-carousel",{
         autoplay: true,
         smartSpeed: 1000,
         center: true,
