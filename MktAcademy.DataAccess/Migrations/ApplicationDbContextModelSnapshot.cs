@@ -176,12 +176,10 @@ namespace MktAcademy.DataAccess.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -218,12 +216,10 @@ namespace MktAcademy.DataAccess.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -265,6 +261,64 @@ namespace MktAcademy.DataAccess.Migrations
                         {
                             Id = 3,
                             Name = "Legislation"
+                        });
+                });
+
+            modelBuilder.Entity("MktAcademy.Models.Company", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Companies");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "Rua do Sol Posto, nº99",
+                            City = "Cambraia",
+                            Name = "IOT & Company",
+                            PhoneNumber = "923456879",
+                            PostalCode = "2900-221"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Address = "Travessa da Boaventura, nº8",
+                            City = "Coimbra",
+                            Name = "Filhos & Filhos Lda.",
+                            PhoneNumber = "917654223",
+                            PostalCode = "3000-221"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Address = "Rua dos Amigos Unidos, nº5",
+                            City = "Cantanhede",
+                            Name = "Noitadas S.A.",
+                            PhoneNumber = "939000343",
+                            PostalCode = "1200-231"
                         });
                 });
 
