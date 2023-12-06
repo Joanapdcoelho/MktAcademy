@@ -10,6 +10,9 @@ namespace MktAcademy.DataAccess.Repository.IRepository
     {
         ICategoryRepository Category { get; }
         ICourseRepository Course { get; }
+        IApplicationUserRepository ApplicationUser { get; }
+        ICompanyRepository Company { get; }
+        
 
         void Save();
     }
