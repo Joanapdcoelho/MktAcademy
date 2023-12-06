@@ -1,13 +1,15 @@
 ﻿@model Category
-<div class="card shadow border-0 mt-4">
-    <div class="card-header bg-primary bg-gradient ml-0 py-3">
-        <div class="row">
-            <div class="col-12 text-center">
-                <h2 class="text-white py-2">Edit Category</h2>
-            </div>
-        </div>
+
+<partial name="_CategoryHeaderPartial" />
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-primary bg-gradient ml-0 py-3">        
     </div>
     <div class="card-body p-4">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-primary">Edit Category</h2>
+            </div>
+        </div>
         <form method="post">
             <input asp-for="Id" hidden />
             <div class="border p-3 mt-4">
