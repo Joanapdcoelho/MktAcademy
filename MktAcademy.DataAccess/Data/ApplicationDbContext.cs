@@ -16,6 +16,7 @@ namespace MktAcademy.DataAccess.Data
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Course> Courses { get; set; }
+        public DbSet<Company> Companies { get; set; }
         public DbSet<ApplicationUser> applicationUsers { get; set; } 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -43,7 +44,13 @@ namespace MktAcademy.DataAccess.Data
                 new Course { Id = 5, Name = "Legislation 2.0", Description = "Marketing course 25h", ListPrice = 540, Price20 = 432, Remarks = "", CategoryId = 2, ImageUrl = "" }
                 );
 
-            
+
+            modelBuilder.Entity<Company>().HasData(
+                new Company { Id = 1, Name = "IOT & Company", Address = "Rua do Sol Posto, nº99", City = "Cambraia", PostalCode = "2900-221", PhoneNumber = "923456879" },
+                new Company { Id = 2, Name = "Filhos & Filhos Lda.", Address = "Travessa da Boaventura, nº8", City = "Coimbra", PostalCode = "3000-221", PhoneNumber = "917654223" },
+                new Company { Id = 3, Name = "Noitadas S.A.", Address = "Rua dos Amigos Unidos, nº5", City = "Cantanhede", PostalCode = "1200-231", PhoneNumber = "939000343" }
+                );
+
         }
 
     }
