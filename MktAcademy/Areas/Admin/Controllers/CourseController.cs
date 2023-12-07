@@ -18,7 +18,7 @@ using Microsoft.AspNetCore.Http;
 namespace MktAcademy.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Authorize(Roles = SD.Role_Admin)]
+    [Authorize(Roles = SD.Role_Admin)]
     public class CourseController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
