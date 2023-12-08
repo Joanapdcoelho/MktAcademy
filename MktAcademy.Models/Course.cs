@@ -11,7 +11,7 @@ namespace MktAcademy.Models
 {
     public class Course
     {
-        [Key]
+        [Key]        
         public int Id { get; set; }
 
         [Required(ErrorMessage = "You must insert a {0}")]
