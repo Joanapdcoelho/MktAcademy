@@ -1,5 +1,5 @@
 ﻿
-@model Course
+@model ShoppingCart
 <!-- Header Start -->
 <div class="container-fluid bg-primary py-5 mb-5 page-header">    
     <div class="container py-5">        
@@ -12,11 +12,12 @@
 </div>
 <!-- Header End -->
 <form method="post">
+    <input hidden asp-for="CourseId">
     <div class="card shadow border-0 my-4">
         <div class="card-header bg-primary bg-gradient text-light py-4">
             <div class="row">
                 <div class="col-12 text-center">
-                    <h3 class="text-white text-uppercase">@Model.Name</h3>
+                    <h3 class="text-white text-uppercase">@Model.Course.Name</h3>
                 </div>
             </div>
         </div>
@@ -31,7 +32,7 @@
                 </div>
                 <div class="row">
                     <div class="col-12 col-lg-3 offset-lg-1 text-center mb-3">
-                        <img src="@Model.ImageUrl" width="100%" class="rounded" />
+                        <img src="@Model.Course.ImageUrl" width="100%" class="rounded" />
                     </div>                    
                     <div class="col-12 col-lg-6 offset-lg-1">
 
@@ -39,12 +40,12 @@
                             <span class="badge"></span>
                         </div>
                         <div class="row ps-2">
-                            <h6 class="text-dark text-opacity-50 ">@Model.Name</h6>
+                            <h6 class="text-dark text-opacity-50 ">@Model.Course.Name</h6>
                         </div>
                         <div class="row ps-2">
                             <h6 class="text-dark text-opacity-50  pb-2">
-                                <b>Price: </b>@Model.ListPrice.ToString("c")
-                                <b>Company Price:</b> <strike>@Model.Price20.ToString("c")</strike>
+                                <b>Price: </b>@Model.Course.ListPrice.ToString("c")
+                                <b>Company Price:</b> <strike>@Model.Course.Price20.ToString("c")</strike>
                             </h6>
                         </div>
                         <div class="row text-center ps-2">
@@ -58,15 +59,15 @@
                         </div>
                         <div class="row text-center ps-2">
                             <div class="p-1 col-3 col-lg-2 bg-white fw-bold">
-                                <div>Price <strike>@Model.ListPrice.ToString("c")</strike></div>
+                                <div>Price <strike>@Model.Course.ListPrice.ToString("c")</strike></div>
                             </div>
                             <div class="p-1 col-3 col-lg-2 bg-white text-primary fw-bold">
-                                <div>Price @Model.Price20.ToString("c")</div>
+                                <div>Price @Model.Course.Price20.ToString("c")</div>
                             </div>
 
                         </div>
                         <div class="row pl-2 my-3">
-                            <p class="text-secondary lh-sm">@Html.Raw(Model.Description)</p>
+                            <p class="text-secondary lh-sm">@Html.Raw(Model.Course.Description)</p>
                         </div>
                         <div class="row pl-2 mb-3">
                             <div class="col-md-4">
@@ -75,7 +76,7 @@
                                           id="inputGroup-sizing-default">
                                         Count
                                     </span>
-                                    <input type="number" value="1" class="form-control text-end"
+                                    <input asp-for="Count" type="number" value="1" class="form-control text-end"
                                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
                                 </div>
                             </div>
@@ -88,7 +89,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
