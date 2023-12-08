@@ -9,10 +9,10 @@ namespace MktAcademy.DataAccess.Repository.IRepository
     public interface IUnitOfWork
     {
         ICategoryRepository Category { get; }
-        ICourseRepository Course { get; }
-        IApplicationUserRepository ApplicationUser { get; }
+        ICourseRepository Course { get; }        
         ICompanyRepository Company { get; }
-        
+        IShoppingCartRepository ShoppingCart { get; }
+        IApplicationUserRepository ApplicationUser { get; }
 
         void Save();
     }
