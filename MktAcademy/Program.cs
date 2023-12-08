@@ -5,6 +5,7 @@ using MktAcademy.DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using MktAcademy.Utility;
+using Syncfusion.Licensing;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,8 @@ builder.Services.ConfigureApplicationCookie(options => {
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+
+SyncfusionLicenseProvider.RegisterLicense(builder.Configuration.GetSection("Syncfusion: Licensekey").Get<string>());
 
 var app = builder.Build();
 
