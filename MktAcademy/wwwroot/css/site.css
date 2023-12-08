@@ -32,6 +32,13 @@
     background-size: cover;
 }
 
+.page-header-shopping-cart {
+    background: linear-gradient(rgba(24, 29, 56, .7), rgba(24, 29, 56, .7)), url(../images/shoppingCart1.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .page-header-category {
     background: linear-gradient(rgba(24, 29, 56, .7), rgba(24, 29, 56, .7)), url(../images/Category.jpg);
     background-position: center center;
