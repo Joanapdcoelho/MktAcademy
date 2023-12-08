@@ -28,14 +28,51 @@ namespace MktAcademy.Areas.Customer.Controllers
 
         public IActionResult Index()
         {
+
             IEnumerable<Course> courseList = _unitOfWork.Course.GetAll(includeProperties: "Category");
             return View(courseList);
         }
 
-        public IActionResult Details(int id)
+        public IActionResult Details(int courseId)
         {
-            Course course = _unitOfWork.Course.Get(u => u.Id == id, includeProperties: "Category");
-            return View(course);
+            ShoppingCart cart = new()
+            {
+                Count =1,
+                CourseId = courseId,
+                Course = _unitOfWork.Course.GetFirstOrDefault(u=>u.Id == courseId, includeProperties: "Category"),
+            };
+            return View(cart);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Details(ShoppingCart shoppingCart)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            shoppingCart.ApplicationUserId = claim.Value;
+
+            ShoppingCart cartFromDb = _unitOfWork.ShoppingCart.GetFirstOrDefault(u => u.ApplicationUserId == claim.Value && u.CourseId == shoppingCart.CourseId);
+
+            if(cartFromDb != null)
+            {
+                //shopping cart exists
+                cartFromDb.Count += shoppingCart.Count;
+                _unitOfWork.ShoppingCart.Update(cartFromDb);
+                _unitOfWork.Save();
+            }
+            else
+            {
+                //add cart record
+                _unitOfWork.ShoppingCart.Add(shoppingCart);
+                _unitOfWork.Save();
+                //HttpContext.Session.SetInt32(SD.SessionCart,
+                //_unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId).Count();
+            }
+            TempData["success"] = "Cart updated successfully";
+
+            return RedirectToAction(nameof(Index));
+        
         }
 
         public IActionResult Privacy()
