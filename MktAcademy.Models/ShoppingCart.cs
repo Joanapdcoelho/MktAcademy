@@ -26,5 +26,9 @@ namespace MktAcademy.Models
         [ForeignKey("ApplicationUserId")]
         [ValidateNever]
         public ApplicationUser ApplicationUser { get; set; }
+
+        [NotMapped]
+        public decimal Price { get; set; }
+
     }
 }
