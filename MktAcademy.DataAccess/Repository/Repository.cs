@@ -54,7 +54,7 @@ namespace MktAcademy.DataAccess.Repository
         }
 
         //include properties - "Category"
-        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? includeProperties = null, bool tracked = false)
         {
             IQueryable<T> query = dbSet;
             if (filter != null)
@@ -72,7 +72,7 @@ namespace MktAcademy.DataAccess.Repository
             return query.ToList();
         }
 
-        public T GetFirstOrDefault(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked = true)
+        public T GetFirstOrDefault(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked = false)
         {
             if (tracked)
             {
