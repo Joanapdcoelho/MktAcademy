@@ -14,7 +14,7 @@
 <form method="post">
     <input hidden asp-for="CourseId">
     <div class="card shadow border-0 my-4">
-        <div class="card-header bg-primary bg-gradient text-light py-4">
+        <div class="card-header bg-primary bg-gradient text-light py-2">
             <div class="row">
                 <div class="col-12 text-center">
                     <h3 class="text-white text-uppercase">@Model.Course.Name</h3>
@@ -40,12 +40,25 @@
                             <span class="badge"></span>
                         </div>
                         <div class="row ps-2">
-                            <h6 class="text-dark text-opacity-50 ">@Model.Course.Name</h6>
+                            <h6 class="text-primary text-opacity-50 ">@Model.Course.Name</h6>
                         </div>
                         <div class="row ps-2">
                             <h6 class="text-dark text-opacity-50  pb-2">
-                                <b>Price: </b>@Model.Course.ListPrice.ToString("c")
-                                <b>Company Price:</b> <strike>@Model.Course.Price20.ToString("c")</strike>
+                                @if (User.IsInRole(SD.Role_Company))
+                                {
+                                    <b>Price:</b>
+
+                                    <strike> @Model.Course.ListPrice.ToString("c")</strike>
+                                    <b>Company Price:</b> @Model.Course.Price20.ToString("c")
+                                }
+                                else
+                                {
+                                    <b>Price: </b>
+
+                                    @Model.Course.ListPrice.ToString("c")
+                                }
+                                
+                                
                             </h6>
                         </div>
                         <div class="row text-center ps-2">
@@ -57,13 +70,20 @@
                             </div>
 
                         </div>
+                        
                         <div class="row text-center ps-2">
-                            <div class="p-1 col-3 col-lg-2 bg-white fw-bold">
-                                <div>Price <strike>@Model.Course.ListPrice.ToString("c")</strike></div>
-                            </div>
-                            <div class="p-1 col-3 col-lg-2 bg-white text-primary fw-bold">
-                                <div>Price @Model.Course.Price20.ToString("c")</div>
-                            </div>
+                            @if (User.IsInRole(SD.Role_Company))
+                            {
+                                <div class="p-1 col-3 col-lg-2 bg-white text-dark fw-bold">
+                                    <div><span class="text-primary">Price</span> @Model.Course.Price20.ToString("c")</div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="p-1 col-3 col-lg-2 bg-white fw-bold">
+                                    <div><span class="text-primary">Price</span> @Model.Course.ListPrice.ToString("c")</div>
+                                </div>
+                            }                 
 
                         </div>
                         <div class="row pl-2 my-3">
