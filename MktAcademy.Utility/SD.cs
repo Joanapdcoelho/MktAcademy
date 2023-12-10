@@ -8,11 +8,26 @@ namespace MktAcademy.Utility
 {
     public static class SD
     {
+        //User roles
         public const string Role_Customer = "Customer";
         public const string Role_Company = "Company";
         public const string Role_Admin = "Admin";
         public const string Role_Employee = "Employee";
         public const string Role_Student = "Student";
         public const string Role_Instructor = "Instructor";
+
+        //Order Status
+        public const string StatusPending = "Pending";
+        public const string StatusApproved = "Approved";
+        public const string StatusInProcess = "Processing";
+        public const string StatusDelivered = "Delivered";
+        public const string StatusCancelled = "Cancelled";
+        public const string StatusRefunded = "Refunded";
+
+        //Payment Status
+        public const string PaymentStatusPending = "Pending";
+        public const string PaymentStatusApproved = "Approved";
+        public const string PaymentStatusDelayedPayment = "ApprovedForDelayedPayment";
+        public const string PaymentStatusRejected = "Rejected";
     }
 }
