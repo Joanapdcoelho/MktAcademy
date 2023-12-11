@@ -6,7 +6,7 @@ using MktAcademy.Utility;
 using MktAcademy.Models;
 using System.Runtime.CompilerServices;
 using System.Security.Claims;
-using Stripe.BillingPortal;
+using Stripe.Checkout;
 
 namespace MktAcademy.Areas.Customer.Controllers
 {
@@ -119,11 +119,44 @@ namespace MktAcademy.Areas.Customer.Controllers
                 _unitOfWork.Save();
             }
 
-            if(applicationUser.CompanyId.GetValueOrDefault()==0)
+            if (applicationUser.CompanyId.GetValueOrDefault() == 0)
             {
                 //regular customer account need capture payment
-                //stripe logic                
+                //stripe logic
+                var domain = "https://localhost:44326/";
+                var options = new SessionCreateOptions
+                {
+                    SuccessUrl = domain + $"customer/cart/OrderConfirmation?id={ShoppingCartVM.OrderHeader.Id}",
+                    CancelUrl = domain + "customer/cart/index",
+                    //items on shopping cart
+                    LineItems = new List<SessionLineItemOptions>(),
+                    Mode = "payment",
+                };
 
+                foreach (var item in ShoppingCartVM.ShoppingCartList)
+                {
+                    var sessionLineItem = new SessionLineItemOptions
+                    {
+                        PriceData = new SessionLineItemPriceDataOptions
+                        {
+                            UnitAmount = (long)(item.Price * 100), // 20.50 => 2050
+                            Currency = "eur",
+                            ProductData = new SessionLineItemPriceDataProductDataOptions
+                            {
+                                Name = item.Course.Name
+                            }
+                        },
+                        Quantity = item.Count
+                    };
+                    options.LineItems.Add(sessionLineItem);
+                }
+
+                var service = new SessionService();
+                Session session = service.Create(options);
+                _unitOfWork.OrderHeader.UpdateStripePaymentId(ShoppingCartVM.OrderHeader.Id, session.Id, session.PaymentIntentId);
+                _unitOfWork.Save();
+                Response.Headers.Add("Location", session.Url);
+                return new StatusCodeResult(303);
 
             }
             
@@ -132,8 +165,36 @@ namespace MktAcademy.Areas.Customer.Controllers
 
         public IActionResult OrderConfirmation(int id)
         {
+            OrderHeader orderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == id, includeProperties: "ApplicationUser");
+            if (orderHeader.PaymentStatus != SD.PaymentStatusDelayedPayment)
+            {
+                //this is an order by customer
+
+                var service = new SessionService();
+                Session session = service.Get(orderHeader.SessionId);
+
+                if (session.PaymentStatus.ToLower() == "paid")
+                {
+                    _unitOfWork.OrderHeader.UpdateStripePaymentId(id, session.Id, session.PaymentIntentId);
+                    _unitOfWork.OrderHeader.UpdateStatus(id, SD.StatusApproved, SD.PaymentStatusApproved);
+                    _unitOfWork.Save();
+                }
+                //HttpContext.Session.Clear();
+
+            }
+
+            //_emailSender.SendEmailAsync(orderHeader.ApplicationUser.Email, "New Order - MktAcademy",
+            //    $"<p>New Order Created - {orderHeader.Id}</p>");
+
+            List<ShoppingCart> shoppingCarts = _unitOfWork.ShoppingCart
+                .GetAll(u => u.ApplicationUserId == orderHeader.ApplicationUserId).ToList();
+
+            _unitOfWork.ShoppingCart.RemoveRange(shoppingCarts);
+            _unitOfWork.Save();
+
             return View(id);
-        }
+        }            
+        
 
         public IActionResult Plus(int cartId)
         {
