@@ -1,4 +1,8 @@
 ﻿@model ShoppingCartVM
+@using Microsoft.Extensions.Options
+@inject IOptions<MktAcademy.Utility.StripeSettings> Stripe
+
+
 <partial name="_ShoppingCartHeaderPartial" />
 <form method="post">
     <br />
