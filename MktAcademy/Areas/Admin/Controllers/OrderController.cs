@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MktAcademy.DataAccess.Repository.IRepository;
 using MktAcademy.Models;
+using MktAcademy.Models.ViewModels;
 using MktAcademy.Utility;
 using System.Security.Claims;
 
@@ -21,6 +22,17 @@ namespace MktAcademy.Areas.Admin.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        public IActionResult Details(int orderId)
+        {
+            OrderVM orderVM = new()
+            {
+                OrderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == orderId, includeProperties: "ApplicationUser"),
+                OrderDetail = _unitOfWork.OrderDetail.GetAll(u => u.OrderHeaderId == orderId, includeProperties: "Course")
+            };
+
+            return View(orderVM);
         }
 
         #region API CALLS
