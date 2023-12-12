@@ -467,6 +467,9 @@ namespace MktAcademy.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CourseEnrollment")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateOnly>("EnrollmentDate")
                         .HasColumnType("date");
 
