@@ -23,6 +23,7 @@ namespace MktAcademy.Models
 
         public string? OrderStatus { get; set; }
         public string? PaymentStatus { get; set; }
+        public string? CourseEnrollment {  get; set; }
 
         public DateTime PaymentDate { get; set; }
         public DateOnly PaymentDueDate { get; set; }
