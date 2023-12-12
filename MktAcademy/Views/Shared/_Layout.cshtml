@@ -1,4 +1,7 @@
-﻿
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -74,11 +77,13 @@
                                 </ul>
                             </li>
                         }
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="Customer" asp-controller="Cart" asp-action="Index">
-                                <i class="fa-solid fa-cart-shopping"></i>&nbsp;
-                            </a>
-                        </li>
+                                               
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Customer" asp-controller="Cart" asp-action="Index">
+                                @await Component.InvokeAsync("ShoppingCart")
+                                </a>
+                            </li>
+                        
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
