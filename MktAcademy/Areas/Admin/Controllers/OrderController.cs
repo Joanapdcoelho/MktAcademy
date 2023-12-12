@@ -4,7 +4,10 @@ using MktAcademy.DataAccess.Repository.IRepository;
 using MktAcademy.Models;
 using MktAcademy.Models.ViewModels;
 using MktAcademy.Utility;
+using Stripe.Checkout;
+using Stripe;
 using System.Security.Claims;
+using System;
 
 namespace MktAcademy.Areas.Admin.Controllers
 {
@@ -13,6 +16,8 @@ namespace MktAcademy.Areas.Admin.Controllers
     public class OrderController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        [BindProperty]
+        public OrderVM OrderVM { get; set; }
 
         public OrderController(IUnitOfWork unitOfWork)
         {
@@ -26,14 +31,167 @@ namespace MktAcademy.Areas.Admin.Controllers
 
         public IActionResult Details(int orderId)
         {
-            OrderVM orderVM = new()
+            OrderVM = new()
             {
                 OrderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == orderId, includeProperties: "ApplicationUser"),
                 OrderDetail = _unitOfWork.OrderDetail.GetAll(u => u.OrderHeaderId == orderId, includeProperties: "Course")
             };
 
-            return View(orderVM);
+            return View(OrderVM);
         }
+
+        [HttpPost]
+        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
+        public IActionResult UpdateOrderDetail()
+        {
+            var orderHeaderFromDb = _unitOfWork.OrderHeader.Get(u => u.Id == OrderVM.OrderHeader.Id);
+            orderHeaderFromDb.Name = OrderVM.OrderHeader.Name;
+            orderHeaderFromDb.PhoneNumber = OrderVM.OrderHeader.PhoneNumber;
+            orderHeaderFromDb.Address = OrderVM.OrderHeader.Address;
+            orderHeaderFromDb.City = OrderVM.OrderHeader.City;
+            orderHeaderFromDb.PostalCode = OrderVM.OrderHeader.PostalCode;
+
+            _unitOfWork.OrderHeader.Update(orderHeaderFromDb);
+            _unitOfWork.Save();
+
+            TempData["Success"] = "Order Details Updated Successfully.";
+
+
+            return RedirectToAction(nameof(Details), new { orderId = orderHeaderFromDb.Id });
+        }
+
+        [HttpPost]
+        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
+        public IActionResult StartProcessing()
+        {
+            _unitOfWork.OrderHeader.UpdateStatus(OrderVM.OrderHeader.Id, SD.StatusInProcess);
+            _unitOfWork.Save();
+            TempData["Success"] = "Order Details Updated Successfully.";
+            return RedirectToAction(nameof(Details), new { orderId = OrderVM.OrderHeader.Id });
+        }
+
+        [HttpPost]
+        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
+        public IActionResult CourseEnrollmentOrder()
+        {
+
+            var orderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == OrderVM.OrderHeader.Id);
+            orderHeader.CourseEnrollment = OrderVM.OrderHeader.CourseEnrollment;
+            orderHeader.OrderStatus = SD.StatusDelivered;
+            orderHeader.EnrollmentDate = DateOnly.FromDateTime(DateTime.Now);
+            if (orderHeader.PaymentStatus == SD.PaymentStatusDelayedPayment)
+            {
+                orderHeader.PaymentDueDate = DateOnly.FromDateTime(DateTime.Now.AddDays(30));
+            }
+
+            _unitOfWork.OrderHeader.Update(orderHeader);
+            _unitOfWork.Save();
+            TempData["Success"] = "Order Successful.";
+            return RedirectToAction(nameof(Details), new { orderId = OrderVM.OrderHeader.Id });
+        }
+        [HttpPost]
+        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
+        public IActionResult CancelOrder()
+        {
+
+            var orderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == OrderVM.OrderHeader.Id);
+
+            if (orderHeader.PaymentStatus == SD.PaymentStatusApproved)
+            {
+                var options = new RefundCreateOptions
+                {
+                    Reason = RefundReasons.RequestedByCustomer,
+                    PaymentIntent = orderHeader.PaymentIntentId 
+                };
+
+                var service = new RefundService();
+                Refund refund = service.Create(options);
+
+                _unitOfWork.OrderHeader.UpdateStatus(orderHeader.Id, SD.StatusCancelled, SD.StatusRefunded);
+            }
+            else
+            {
+                _unitOfWork.OrderHeader.UpdateStatus(orderHeader.Id, SD.StatusCancelled, SD.StatusCancelled);
+            }
+            _unitOfWork.Save();
+            TempData["Success"] = "Order Cancelled Successfully.";
+            return RedirectToAction(nameof(Details), new { orderId = OrderVM.OrderHeader.Id });
+
+        }
+
+
+        [ActionName("Details")]
+        [HttpPost]
+        public IActionResult Details_PAY_NOW()
+        {
+            OrderVM.OrderHeader = _unitOfWork.OrderHeader
+                .Get(u => u.Id == OrderVM.OrderHeader.Id, includeProperties: "ApplicationUser");
+            OrderVM.OrderDetail = _unitOfWork.OrderDetail
+                .GetAll(u => u.OrderHeaderId == OrderVM.OrderHeader.Id, includeProperties: "Course");
+
+            //stripe logic
+            var domain = Request.Scheme + "://" + Request.Host.Value + "/";
+            var options = new SessionCreateOptions
+            {
+                SuccessUrl = domain + $"admin/order/PaymentConfirmation?orderHeaderId={OrderVM.OrderHeader.Id}",
+                CancelUrl = domain + $"admin/order/details?orderId={OrderVM.OrderHeader.Id}",
+                LineItems = new List<SessionLineItemOptions>(),
+                Mode = "payment",
+            };
+
+            foreach (var item in OrderVM.OrderDetail)
+            {
+                var sessionLineItem = new SessionLineItemOptions
+                {
+                    PriceData = new SessionLineItemPriceDataOptions
+                    {
+                        UnitAmount = (long)(item.Price * 100), // $20.50 => 2050
+                        Currency = "eur",
+                        ProductData = new SessionLineItemPriceDataProductDataOptions
+                        {
+                            Name = item.Course.Name
+                        }
+                    },
+                    Quantity = item.Count
+                };
+                options.LineItems.Add(sessionLineItem);
+            }
+
+
+            var service = new SessionService();
+            Session session = service.Create(options);
+            _unitOfWork.OrderHeader.UpdateStripePaymentId(OrderVM.OrderHeader.Id, session.Id, session.PaymentIntentId);
+            _unitOfWork.Save();
+            Response.Headers.Add("Location", session.Url);
+            return new StatusCodeResult(303);
+        }
+
+        public IActionResult PaymentConfirmation(int orderHeaderId)
+        {
+
+            OrderHeader orderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == orderHeaderId);
+            if (orderHeader.PaymentStatus == SD.PaymentStatusDelayedPayment)
+            {
+                //this is an order by company
+
+                var service = new SessionService();
+                Session session = service.Get(orderHeader.SessionId);
+
+                if (session.PaymentStatus.ToLower() == "paid")
+                {
+                    _unitOfWork.OrderHeader.UpdateStripePaymentId(orderHeaderId, session.Id, session.PaymentIntentId);
+                    _unitOfWork.OrderHeader.UpdateStatus(orderHeaderId, orderHeader.OrderStatus, SD.PaymentStatusApproved);
+                    _unitOfWork.Save();
+                }
+
+
+            }
+
+
+            return View(orderHeaderId);
+        }
+
+
 
         #region API CALLS
 
