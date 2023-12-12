@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace MktAcademy.Models
 {
@@ -12,12 +13,12 @@ namespace MktAcademy.Models
     {
         public int ID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "You must insert a {0}")]
         [Display(Name = "First Name")]
         [StringLength(50)]
         public string FirstName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "You must insert a {0}")]
         [Column("LastName")]
         [Display(Name = "Last Name")]
         [StringLength(50)]
@@ -26,7 +27,7 @@ namespace MktAcademy.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Hire Date")]
-        public DateTime HireDate { get; set; }
+        public DateOnly HireDate { get; set; }
 
         [Display(Name = "Full Name")]
         public string FullName
@@ -37,8 +38,12 @@ namespace MktAcademy.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Date of birth")]
-        public DateTime DateOfBirth { get; set; }
+        public DateOnly DateOfBirth { get; set; }
 
-        public virtual ICollection<Course> Courses { get; set; }
+        public string ApplicationUserId { get; set; }
+        [ForeignKey("ApplicationUserId")]
+        [ValidateNever]
+        public ApplicationUser ApplicationUser { get; set; }
+
     }
 }
