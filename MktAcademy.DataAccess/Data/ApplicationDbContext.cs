@@ -3,6 +3,7 @@ using MktAcademy.Models;
 using MktAcademy.DataAccess.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using System.Diagnostics;
 
 
 namespace MktAcademy.DataAccess.Data
@@ -22,7 +23,7 @@ namespace MktAcademy.DataAccess.Data
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<OrderHeader> OrderHeaders { get; set; }
         public DbSet<Student> Students { get; set; }
-        //public DbSet<Enrollment> Enrollments { get; set; }
+        public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<Instructor> Instructors { get; set; }
 
 
@@ -34,6 +35,12 @@ namespace MktAcademy.DataAccess.Data
             .HasOne(c => c.Category)
             .WithMany()
             .HasForeignKey(c => c.CategoryId)
+            .OnDelete(DeleteBehavior.Restrict); // Define o comportamento de exclusão para "Restrict"
+
+            modelBuilder.Entity<Student>()
+            .HasOne(c => c.Course)
+            .WithMany()
+            .HasForeignKey(c => c.CourseId)
             .OnDelete(DeleteBehavior.Restrict); // Define o comportamento de exclusão para "Restrict"
 
             modelBuilder.Entity<Category>().HasData(
@@ -58,7 +65,11 @@ namespace MktAcademy.DataAccess.Data
                 new Company { Id = 3, Name = "Noitadas S.A.", Address = "Rua dos Amigos Unidos, nº5", City = "Cantanhede", PostalCode = "1200-231", PhoneNumber = "939000343" }
                 );
 
-            
+            modelBuilder.Entity<Student>().HasData(
+                new Student { Id = 1, FirstName = "João", LastName="Matias", DateOfBirth = DateOnly.Parse("1989-09-01"), Address = "Rua do Sol Posto, nº102", City = "Cambraia", PostalCode = "2900-221", PhoneNumber = "923456444", EnrollmentDate = DateOnly.Parse("2023-12-12"), ImageUrl= ""},
+               new Student { Id = 2, FirstName = "Mariana", LastName = "Antunes", DateOfBirth = DateOnly.Parse("1999-09-01"), Address = "Rua da Soledade, nº5", City = "Cambraia", PostalCode = "2900-221", PhoneNumber = "923456111", EnrollmentDate = DateOnly.Parse("2023-12-12"), ImageUrl = "" }
+                );
+
 
         }
 
