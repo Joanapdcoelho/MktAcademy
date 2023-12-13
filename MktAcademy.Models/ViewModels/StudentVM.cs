@@ -10,6 +10,6 @@ namespace MktAcademy.Models.ViewModels
     public class StudentVM
     {
         public Student Student { get; set; }
-        public IEnumerable<SelectListItem> CourseList { get; set; }
+        public IEnumerable<SelectListItem> CourseList { get; set; } 
     }
 }
