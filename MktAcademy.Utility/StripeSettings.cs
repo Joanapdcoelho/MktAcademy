@@ -8,7 +8,7 @@ namespace MktAcademy.Utility
 {
     public class StripeSettings
     {
-        public string Secretkey {  get; set; }
-        public string Publishablekey { get; set; }
+        public string Secretkey { get; set; } = string.Empty;
+        public string Publishablekey { get; set; } = string.Empty;
     }
 }
