@@ -64,7 +64,7 @@ namespace MktAcademy.DataAccess.Data
                 new Company { Id = 2, Name = "Filhos & Filhos Lda.", Address = "Travessa da Boaventura, nº8", City = "Coimbra", PostalCode = "3000-221", PhoneNumber = "917654223" },
                 new Company { Id = 3, Name = "Noitadas S.A.", Address = "Rua dos Amigos Unidos, nº5", City = "Cantanhede", PostalCode = "1200-231", PhoneNumber = "939000343" }
                 );
-                      
+            
         }
 
     }
