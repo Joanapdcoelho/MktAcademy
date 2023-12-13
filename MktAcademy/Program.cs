@@ -32,11 +32,26 @@ builder.Services.AddSession(options => {
     options.Cookie.IsEssential = true;
 });
 
+builder.Services.AddAuthentication().AddGoogle(googleOptions =>
+{
+    googleOptions.ClientId = builder.Configuration.GetSection("GoogleAuthSettings")
+.GetValue<string>("ClientId");
+    googleOptions.ClientSecret = builder.Configuration.GetSection("GoogleAuthSettings")
+.GetValue<string>("ClientSecret");
+});
+
+builder.Services.AddAuthentication()
+.AddFacebook(fbOptions => {
+    fbOptions.AppId = builder.Configuration.GetSection("FacebookSettings")
+.GetValue<string>("AppId");
+    fbOptions.AppSecret = builder.Configuration.GetSection("FacebookSettings")
+.GetValue<string>("AppSecret");
+});
 
 
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddSingleton<IEmailSender, EmailSender>();
 
 SyncfusionLicenseProvider.RegisterLicense(builder.Configuration.GetSection("Syncfusion: Licensekey").Get<string>());
 
