@@ -38,12 +38,12 @@ namespace MktAcademy.Areas.Identity.Pages.Account
         private readonly IUnitOfWork _unitOfWork;
 
         public RegisterModel(
-            UserManager<IdentityUser> userManager,
-            RoleManager<IdentityRole> roleManager,
+            UserManager<IdentityUser> userManager,            
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager,
             IUnitOfWork unitOfWork)
         {
             _roleManager = roleManager;
