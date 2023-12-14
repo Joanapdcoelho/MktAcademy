@@ -22,12 +22,12 @@ namespace MktAcademy.Areas.Admin.Controllers
     public class StudentController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly IWebHostEnvironment _webhostEnvironment;
 
-        public StudentController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment)
+        public StudentController(IUnitOfWork unitOfWork, IWebHostEnvironment webhostEnvironment)
         {
             _unitOfWork = unitOfWork;
-            _hostEnvironment = hostEnvironment;
+            _webhostEnvironment = webhostEnvironment;
         }
         public IActionResult Index()
         {
@@ -70,7 +70,7 @@ namespace MktAcademy.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                string wwwRootPath = _hostEnvironment.WebRootPath;
+                string wwwRootPath = _webhostEnvironment.WebRootPath;
                 //se o ficheiro foi uploaded
                 if (file != null)
                 {
@@ -138,7 +138,7 @@ namespace MktAcademy.Areas.Admin.Controllers
             }
 
             //remover a imagem associada se existir
-            var oldImagePath = Path.Combine(_hostEnvironment.WebRootPath, obj.ImageUrl.TrimStart('\\'));
+            var oldImagePath = Path.Combine(_webhostEnvironment.WebRootPath, obj.ImageUrl.TrimStart('\\'));
             if (System.IO.File.Exists(oldImagePath))
             {
                 System.IO.File.Delete(oldImagePath);
