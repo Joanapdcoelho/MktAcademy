@@ -16,7 +16,7 @@ function loadDataTable() {
 			{ "data": "lastName", "width": "15%" },
 			{ "data": "dateOfBirth", "width": "15%" },
 			{ "data": "address", "width": "15%" },			
-			{ "data": "City", "width": "15%" },
+			{ "data": "city", "width": "15%" },
 			{ "data": "postalCode", "width": "15%" },
 			{ "data": "phoneNumber", "width": "15%" },
 			{ "data": "enrollmentDate", "width": "15%" },
