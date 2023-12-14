@@ -619,10 +619,6 @@ namespace MktAcademy.DataAccess.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
@@ -640,9 +636,6 @@ namespace MktAcademy.DataAccess.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("Grade")
-                        .HasColumnType("int");
-
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -659,11 +652,53 @@ namespace MktAcademy.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.HasIndex("CourseId");
 
                     b.ToTable("Students");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "123 Main Street",
+                            City = "Lisbon",
+                            CourseId = 1,
+                            DateOfBirth = new DateOnly(1990, 5, 15),
+                            EnrollmentDate = new DateOnly(2022, 9, 1),
+                            FirstName = "John",
+                            ImageUrl = "",
+                            LastName = "Doe",
+                            PhoneNumber = "123456789",
+                            PostalCode = "1000-001"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Address = "456 Oak Avenue",
+                            City = "Porto",
+                            CourseId = 1,
+                            DateOfBirth = new DateOnly(1992, 8, 20),
+                            EnrollmentDate = new DateOnly(2022, 9, 1),
+                            FirstName = "Jane",
+                            ImageUrl = "",
+                            LastName = "Smith",
+                            PhoneNumber = "987654321",
+                            PostalCode = "2000-002"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Address = "789 Pine Street",
+                            City = "Faro",
+                            CourseId = 2,
+                            DateOfBirth = new DateOnly(1995, 3, 10),
+                            EnrollmentDate = new DateOnly(2022, 9, 1),
+                            FirstName = "Bob",
+                            ImageUrl = "",
+                            LastName = "Johnson",
+                            PhoneNumber = "456789123",
+                            PostalCode = "3000-003"
+                        });
                 });
 
             modelBuilder.Entity("MktAcademy.Models.ApplicationUser", b =>
@@ -834,19 +869,11 @@ namespace MktAcademy.DataAccess.Migrations
 
             modelBuilder.Entity("MktAcademy.Models.Student", b =>
                 {
-                    b.HasOne("MktAcademy.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("MktAcademy.Models.Course", "Course")
                         .WithMany()
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("ApplicationUser");
 
                     b.Navigation("Course");
                 });
