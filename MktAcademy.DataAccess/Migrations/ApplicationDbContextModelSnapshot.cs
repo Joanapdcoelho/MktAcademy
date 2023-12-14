@@ -843,7 +843,7 @@ namespace MktAcademy.DataAccess.Migrations
                     b.HasOne("MktAcademy.Models.Course", "Course")
                         .WithMany()
                         .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("ApplicationUser");
