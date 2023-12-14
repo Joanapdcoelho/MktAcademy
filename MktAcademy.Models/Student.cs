@@ -46,15 +46,7 @@ namespace MktAcademy.Models
         [Display(Name = "Enrollment Date")]
         public DateOnly EnrollmentDate { get; set; }
         public int? Grade {  get; set; }
-
-        [Display(Name = "Full Name")]
-        public string FullName
-        {
-            get
-            {
-                return FirstName + ", " + LastName;
-            }
-        }
+               
 
         [Display(Name = "Insert Image")]
         [ValidateNever]
