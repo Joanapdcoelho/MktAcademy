@@ -35,18 +35,12 @@ namespace MktAcademy.Models
 
         [ForeignKey("CourseId")]
         [ValidateNever]
-        public Course Course { get; set; }
+        public Course Course { get; set; } 
         
-        public string ApplicationUserId { get; set; }
-        [ForeignKey("ApplicationUserId")]
-        [ValidateNever]
-        public ApplicationUser ApplicationUser { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Enrollment Date")]
-        public DateOnly EnrollmentDate { get; set; }
-        public int? Grade {  get; set; }
-               
+        public DateOnly EnrollmentDate { get; set; }              
 
         [Display(Name = "Insert Image")]
         [ValidateNever]
