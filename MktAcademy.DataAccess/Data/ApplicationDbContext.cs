@@ -44,9 +44,9 @@ namespace MktAcademy.DataAccess.Data
             .OnDelete(DeleteBehavior.Restrict); // Define o comportamento de exclusão para "Restrict"
 
             modelBuilder.Entity<Category>().HasData(
-                new Category { Id = 1, Name = "Marketing"},
-                new Category { Id = 2, Name = "Digital Marketing"},
-                new Category { Id = 3, Name = "Legislation"}
+                new Category { Id = 1, Name = "Marketing" },
+                new Category { Id = 2, Name = "Digital Marketing" },
+                new Category { Id = 3, Name = "Legislation" }
 
                 );
 
@@ -64,7 +64,52 @@ namespace MktAcademy.DataAccess.Data
                 new Company { Id = 2, Name = "Filhos & Filhos Lda.", Address = "Travessa da Boaventura, nº8", City = "Coimbra", PostalCode = "3000-221", PhoneNumber = "917654223" },
                 new Company { Id = 3, Name = "Noitadas S.A.", Address = "Rua dos Amigos Unidos, nº5", City = "Cantanhede", PostalCode = "1200-231", PhoneNumber = "939000343" }
                 );
-            
+
+            modelBuilder.Entity<Student>().HasData(
+                new Student
+                {
+                    Id = 1,
+                    FirstName = "John",
+                    LastName = "Doe",
+                    DateOfBirth = new DateOnly(1990, 5, 15),
+                    Address = "123 Main Street",
+                    City = "Lisbon",
+                    PostalCode = "1000-001",
+                    PhoneNumber = "123456789",
+                    CourseId = 1,
+                    EnrollmentDate = new DateOnly(2022, 9, 1),
+                    ImageUrl = ""
+                },
+                new Student
+                {
+                    Id = 2,
+                    FirstName = "Jane",
+                    LastName = "Smith",
+                    DateOfBirth = new DateOnly(1992, 8, 20),
+                    Address = "456 Oak Avenue",
+                    City = "Porto",
+                    PostalCode = "2000-002",
+                    PhoneNumber = "987654321",
+                    CourseId = 1, 
+                    EnrollmentDate = new DateOnly(2022, 9, 1),
+                    ImageUrl = ""
+                },
+                new Student
+                {
+                    Id = 3,
+                    FirstName = "Bob",
+                    LastName = "Johnson",
+                    DateOfBirth = new DateOnly(1995, 3, 10),
+                    Address = "789 Pine Street",
+                    City = "Faro",
+                    PostalCode = "3000-003",
+                    PhoneNumber = "456789123",
+                    CourseId = 2, 
+                    EnrollmentDate = new DateOnly(2022, 9, 1),
+                    ImageUrl = ""
+                }
+            );
+
         }
 
     }
