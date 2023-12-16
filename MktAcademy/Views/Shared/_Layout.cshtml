@@ -22,7 +22,6 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
     @* <link rel="stylesheet" href="//cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css" /> *@
     <link rel="stylesheet" href="~/lib/animate/animate.min.css" />
-    <link rel="stylesheet" href="~/lib/owlcarousel/owl.carousel.min.js" />
     <link rel="icon" href="~/graduation.png" />
     <script src="https://cdn.tiny.cloud/1/v2i3ukofdcsb6da2fz043g8948nrfjhhafmkka07rco2tr01/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     @* <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" /> *@
@@ -80,13 +79,13 @@
                                 </ul>
                             </li>
                         }
-                                               
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="Customer" asp-controller="Cart" asp-action="Index">
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Customer" asp-controller="Cart" asp-action="Index">
                                 @await Component.InvokeAsync("ShoppingCart")
-                                </a>
-                            </li>
-                        
+                            </a>
+                        </li>
+
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -116,7 +115,7 @@
     @* <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script> *@
 
     <script src="https://cdn.tiny.cloud/1/g28lhnxtlihu4l4a381gw7tz47voznshwbi10lmsvlekrfme/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-    <script src="~/lib/wow/wow.min.js"></script>
+    <script src="~/lib/wow/wow.min.js"></script>    
     <script src="~/lib/easing/easing.min.js"></script>
     <script src="~/lib/waypoints/waypoints.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
@@ -135,6 +134,7 @@
             plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
             toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
         });
-    </script>
+    </script>   
+
 </body>
 </html>
