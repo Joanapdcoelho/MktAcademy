@@ -2,7 +2,6 @@
 
 <img width="248" alt="register" src="https://github.com/Joanapdcoelho/MktAcademy/assets/47078762/add8bb4e-8ecf-432e-8fd5-ee1dfd1b4bbe">
 
-
 <img width="246" alt="login" src="https://github.com/Joanapdcoelho/MktAcademy/assets/47078762/a3d75bdf-4d6c-405d-b203-6cf2ec7f1c0d">
 
 <img width="586" alt="página inicial início" src="https://github.com/Joanapdcoelho/MktAcademy/assets/47078762/f579eb7c-251e-4c6c-b10c-aa142c028465">
