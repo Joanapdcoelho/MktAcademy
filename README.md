@@ -1,8 +1,8 @@
 # MktAcademy
 
-![login](https://github.com/Joanapdcoelho/MktAcademy/assets/47078762/2f3d097c-f8e5-4332-b0e5-21f17efba321)
+<img width="248" alt="register" src="https://github.com/Joanapdcoelho/MktAcademy/assets/47078762/add8bb4e-8ecf-432e-8fd5-ee1dfd1b4bbe">
 
-![register](https://github.com/Joanapdcoelho/MktAcademy/assets/47078762/f249ba2b-1c2f-44d9-8f32-bf9904cd01b0)
+<img width="246" alt="login" src="https://github.com/Joanapdcoelho/MktAcademy/assets/47078762/a3d75bdf-4d6c-405d-b203-6cf2ec7f1c0d">
 
 <img width="586" alt="página inicial início" src="https://github.com/Joanapdcoelho/MktAcademy/assets/47078762/f579eb7c-251e-4c6c-b10c-aa142c028465">
 
