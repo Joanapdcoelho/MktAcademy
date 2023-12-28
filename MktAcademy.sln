@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MktAcademy.Models", "MktAca
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MktAcademy.Utility", "MktAcademy.Utility\MktAcademy.Utility.csproj", "{49E83123-05CC-46B4-AF51-E6D453DE7494}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MktAcademy.Maui", "MktAcademy.Maui\MktAcademy.Maui.csproj", "{14B4A320-1EF1-4073-AD7C-7B04157F0746}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,24 @@ Global
 		{49E83123-05CC-46B4-AF51-E6D453DE7494}.Release|iPhone.Build.0 = Release|Any CPU
 		{49E83123-05CC-46B4-AF51-E6D453DE7494}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{49E83123-05CC-46B4-AF51-E6D453DE7494}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{14B4A320-1EF1-4073-AD7C-7B04157F0746}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14B4A320-1EF1-4073-AD7C-7B04157F0746}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14B4A320-1EF1-4073-AD7C-7B04157F0746}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{14B4A320-1EF1-4073-AD7C-7B04157F0746}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{14B4A320-1EF1-4073-AD7C-7B04157F0746}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{14B4A320-1EF1-4073-AD7C-7B04157F0746}.Debug|iPhone.Deploy.0 = Debug|Any CPU
+		{14B4A320-1EF1-4073-AD7C-7B04157F0746}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{14B4A320-1EF1-4073-AD7C-7B04157F0746}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{14B4A320-1EF1-4073-AD7C-7B04157F0746}.Debug|iPhoneSimulator.Deploy.0 = Debug|Any CPU
+		{14B4A320-1EF1-4073-AD7C-7B04157F0746}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14B4A320-1EF1-4073-AD7C-7B04157F0746}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14B4A320-1EF1-4073-AD7C-7B04157F0746}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{14B4A320-1EF1-4073-AD7C-7B04157F0746}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{14B4A320-1EF1-4073-AD7C-7B04157F0746}.Release|iPhone.Build.0 = Release|Any CPU
+		{14B4A320-1EF1-4073-AD7C-7B04157F0746}.Release|iPhone.Deploy.0 = Release|Any CPU
+		{14B4A320-1EF1-4073-AD7C-7B04157F0746}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{14B4A320-1EF1-4073-AD7C-7B04157F0746}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{14B4A320-1EF1-4073-AD7C-7B04157F0746}.Release|iPhoneSimulator.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
