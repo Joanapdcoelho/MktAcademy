@@ -39,7 +39,7 @@ namespace MktAcademy.Areas.Admin.Controllers
         {
             StudentVM studentVM = new()
             {
-                Student = new(),
+               Student = new(),
                CourseList = _unitOfWork.Course.GetAll().Select(i => new SelectListItem
                 {
                     Text = i.Name,
