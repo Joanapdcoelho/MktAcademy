@@ -1,4 +1,5 @@
 # MktAcademy
+A proposta deste projeto, consiste no desenvolvimento de um Sistema de Gestão de Formação com loja online de venda dos cursos.
 
 <img width="248" alt="register" src="https://github.com/Joanapdcoelho/MktAcademy/assets/47078762/add8bb4e-8ecf-432e-8fd5-ee1dfd1b4bbe">
 
