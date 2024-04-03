@@ -1,5 +1,5 @@
 # MktAcademy
-PROJETO PARA CONTINUAR A DESENVOLVER
+PROJETO AINDA EM DESENVOLVIMENTO
 
 A proposta deste projeto, consiste no desenvolvimento de um Sistema de Gestão de Formação com loja online de venda dos cursos.
 
