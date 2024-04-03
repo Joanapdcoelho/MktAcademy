@@ -1,5 +1,6 @@
 # MktAcademy
 PROJETO PARA CONTINUAR A DESENVOLVER
+
 A proposta deste projeto, consiste no desenvolvimento de um Sistema de Gestão de Formação com loja online de venda dos cursos.
 
 O objetivo principal desta aplicação é proporcionar uma plataforma centralizada e intuitiva para administradores, empresas, instituições de ensino, estudantes e professores
